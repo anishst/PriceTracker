@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <title>Price Tracker App</title>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        container {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="{{url_for('home')}}">
+    Price Tracker App
+  </a>
+</nav>
+
+<div class="container">
+
+<h2>Add new price to Track</h2>
+
+    <form action="/home" method="POST">
+  <div class="form-group">
+    <label for="store_name">Store Name</label>
+    <input type="te" class="form-control" name="store_name" id="store_name" aria-describedby="emailHelp" placeholder="Enter store name">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="item_url">Item URL</label>
+    <input type="text" class="form-control" name="item_url" id="item_url" placeholder="item url">
+  </div>
+   <div class="form-group">
+    <label for="target_price">Target Price</label>
+    <input type="text" class="form-control" name="target_price" id="target_price" placeholder="price">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+    <br/> <br/>
+
+<h2>
+Current Items in DB:
+</h2>
+    <ul>
+ {% for item in items %}
+    <li><b>Store Name:</b>{{ item.store_name }}</li>
+    <li><b>Item URL:</b>{{ item.item_url }}</li>
+    <li><b>Target Price:</b>{{ item.target_price }}</li>
+    {% endfor %}
+</ul>
+
+
+    </div>
+</body>
+</html>
