@@ -11,6 +11,7 @@ class Database(object):
     def initialize():
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client['items']
+        Database.DATABASE = client['price_history']
 
     @staticmethod
     def insert(collection, data):
