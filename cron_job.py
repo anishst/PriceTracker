@@ -4,7 +4,6 @@ import uuid
 
 from common.database import Database
 from common.util import get_latest_price
-from models.item import Item
 
 Database.initialize()
 
