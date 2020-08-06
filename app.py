@@ -3,7 +3,7 @@ import uuid
 
 from flask import Flask, redirect, url_for, request, render_template, flash
 from common.database import *
-from common.selenium_mod import get_latest_price
+from common.util import get_latest_price
 from models.item import Item
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -37,8 +37,7 @@ def home():
         return redirect(url_for('home'))
 
     items  =Database.find('items', { })
-    prices = Database.find('price_history', { })
-    return render_template('home.html', items=items, prices=prices)
+    return render_template('home.html', items=items)
 
 @app.route("/details/<string:item_id>", methods=['GET','POST'])
 def details(item_id):
@@ -47,7 +46,8 @@ def details(item_id):
         pass
     print(item_id)
     items  =Database.find('items',{'_id': item_id})
-    return render_template('details.html', items=items)
+    prices = Database.find('price_history', { 'item_id': item_id})
+    return render_template('details.html', items=items, prices=prices)
 
 @app.route("/edit_item/<string:item_id>", methods=['GET','POST'])
 def edit_item(item_id):
@@ -83,7 +83,7 @@ def delete_item(item_id):
 def check_price_selenium():
     items = Database.find('items', {})
     for item in items:
-        latest_price = get_latest_price(item["item_url"])
+        latest_price = get_latest_price(item)
         price_item = {
             "_id": uuid.uuid4().hex,
             "script_time": time.strftime("%Y-%m-%d %H:%M:%S"),

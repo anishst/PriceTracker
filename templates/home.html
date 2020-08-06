@@ -61,27 +61,6 @@
     {% endfor %}
   </table>
 
-  <h2>Price History:</h2>
-
-
-  <table class="table table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th>ID</th>
-        <th>Script Time</th>
-        <th>URL</th>
-        <TH>price</TH>
-      </tr>
-    </thead>
-    {% for item in prices %}
-    <tr>
-      <td><a href="{{ url_for('details', item_id=item._id) }}">{{item._id}}</a></td>
-      <td>{{ item.script_time }}</td>
-      <td>{{ item.item_url }}</td>
-      <td>{{ item.price }}</td>
-    </tr>
-    {% endfor %}
-  </table>
 
 </div>
 {% endblock %}

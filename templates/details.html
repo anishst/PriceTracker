@@ -3,10 +3,57 @@
 
 <div class="container">
 
-  <h2>Details</h2>
-  {% for item in items %}
-  {{item}}
-  {% endfor %}
+  <h2>Item Details</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Store Name</th>
+         <th>Description</th>
+<!--        <th>URL</th>-->
+        <TH>target price</TH>
+        <th>Admin Actions</th>
+      </tr>
+    </thead>
+
+    {% for item in items %}
+    <tr>
+      <td>{{item._id}}</td>
+      <td>{{ item.store_name }}</td>
+<!--      <td><a href="{{ item.item_url }}" target="_blank">{{ item.item_desc }}</a></td>-->
+      <td><a href="{{ item.item_url }}" target="_blank">{{ item.item_desc }}</a></td>
+      <td>{{ item.target_price }}</td>
+      <td><a href="{{ url_for('details', item_id=item._id) }}">Details</a>| <a href="{{ url_for('edit_item', item_id=item._id) }}">Update</a> | <a href="{{ url_for('delete_item', item_id=item._id) }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+   <h2>Item Price History:</h2>
+
+
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+<!--        <th>Unique ID</th>-->
+        <th>Price Check Date/Time</th>
+        <th>URL</th>
+        <TH>price</TH>
+        <TH>item_id</TH>
+      </tr>
+    </thead>
+    {% for item in prices %}
+    <tr>
+<!--      <td><a href="{{ url_for('details', item_id=item._id) }}">{{item._id}}</a></td>-->
+      <td>{{ item.script_time }}</td>
+      <td>{{ item.item_url }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.item_id }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
 
 </div>
 {% endblock %}
