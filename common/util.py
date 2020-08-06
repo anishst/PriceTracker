@@ -39,9 +39,9 @@ def send_email(msg):
 
 def get_latest_price(item):
     chrome_options = Options()
-    # chrome_options.add_argument('--headless')
-    # chrome_options.add_argument('--disable-gpu')
-    # chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(options=chrome_options)
     driver.implicitly_wait(10)
     try:

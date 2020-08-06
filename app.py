@@ -1,20 +1,12 @@
 import time
 import uuid
-
 from flask import Flask, redirect, url_for, request, render_template, flash
 from common.database import *
 from common.util import get_latest_price
-from models.item import Item
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-from models.item import Item
 
 app = Flask(__name__)
-app.secret_key = "123"
+app.secret_key = "abcdef133"
 
 
 @app.before_first_request
