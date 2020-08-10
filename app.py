@@ -37,17 +37,13 @@ def home():
 
 
     for item in itemsList:
-        new_dict = {}
-        # get latest price
+        new_dict = {} # temp dict
+        # get item
         myquery = {"item_id": item["_id"]}
         mydoc = Database.find('price_history', myquery).sort("script_time", -1).limit(1)
-        print(item["item_desc"], item["target_price"])
-        new_dict["_id"] = item["_id"]
-        new_dict["item_desc"] = item["item_desc"]
-        new_dict["item_url"] = item["item_url"]
-        new_dict["target_price"] = item["target_price"]
-        new_dict["store_name"] = item["store_name"]
+        #  copy all items to temp dict
         new_dict = item.copy()
+        print(new_dict)
         print("Latest price...")
         myquery = {"item_id": item["_id"]}
         mydoc = Database.find('price_history', myquery).sort("script_time", -1).limit(1)
