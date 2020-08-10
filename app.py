@@ -27,9 +27,46 @@ def home():
         }
         Database.insert('items', new_item)
         return redirect(url_for('home'))
+    #TODO : FIND A WAY TO SHOW LATEST PRICE on home page
+    latest_item = Database.find('price_history', {}).sort("script_time", -1).limit(1)
+    # items  =Database.find('items', { })
+    items = Database.find('items', {})
+    # print([item for item in items])
+    itemsList = [item for item in items]
+    new_list = []
 
-    items  =Database.find('items', { })
-    return render_template('home.html', items=items)
+
+    for item in itemsList:
+        new_dict = {}
+        # get latest price
+        myquery = {"item_id": item["_id"]}
+        mydoc = Database.find('price_history', myquery).sort("script_time", -1).limit(1)
+        print(item["item_desc"], item["target_price"])
+        new_dict["_id"] = item["_id"]
+        new_dict["item_desc"] = item["item_desc"]
+        new_dict["item_url"] = item["item_url"]
+        new_dict["target_price"] = item["target_price"]
+        new_dict["store_name"] = item["store_name"]
+        new_dict = item.copy()
+        print("Latest price...")
+        myquery = {"item_id": item["_id"]}
+        mydoc = Database.find('price_history', myquery).sort("script_time", -1).limit(1)
+        for x in mydoc:
+            print(x["script_time"], x['price'])
+            new_dict['latest_price_check'] = x["script_time"]
+            new_dict['latest_price'] = x["price"]
+
+        print("Chepest price...")
+        myquery = {"item_id": item["_id"]}
+        mydoc = Database.find('price_history', myquery).sort("price", 1).limit(1)
+        for n in mydoc:
+            print(n["script_time"], n['price'])
+            new_dict['cheapest_price_check'] = n["script_time"]
+            new_dict['cheapest_price'] = n["price"]
+        print("*" * 100)
+        new_list.append(new_dict)
+
+    return render_template('home.html', items=new_list, latest_item=latest_item)
 
 @app.route("/details/<string:item_id>", methods=['GET','POST'])
 def details(item_id):
@@ -38,7 +75,8 @@ def details(item_id):
         pass
     print(item_id)
     items  =Database.find('items',{'_id': item_id})
-    prices = Database.find('price_history', { 'item_id': item_id})
+    # price hisotry sorted in desc order latest price on top
+    prices = Database.find('price_history', { 'item_id': item_id}).sort("script_time", -1)
     return render_template('details.html', items=items, prices=prices)
 
 @app.route("/edit_item/<string:item_id>", methods=['GET','POST'])
@@ -87,6 +125,9 @@ def check_price_selenium():
 
     return redirect('/home')
 
+@app.route("/deal_sites")
+def deal_sites():
+    return render_template("deal_sites.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("5000"), debug=True)

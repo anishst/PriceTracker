@@ -1,4 +1,13 @@
-    .loader {
+@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@700&display=swap');
+
+.app_title {
+    font-family: 'Lemonada', cursive;
+    font-size: 20px;
+    color: rgb(62, 100, 67);
+
+}
+
+.loader {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;
@@ -11,3 +20,17 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.button {
+  border-radius: 25px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.buttonblue {background-color: #008CBA;} /* Blue */
+.buttonred {background-color: #f44336;} /* Red */

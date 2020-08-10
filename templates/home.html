@@ -3,6 +3,46 @@
 
 <div class="container">
 
+
+
+  <h1>Items Tracked</h1>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <!--        <th>ID</th>-->
+          <th> </th>
+          <th>Description</th>
+          <!--        <th>URL</th>-->
+          <th>Latest price</th>
+          <TH>target price</TH>
+          <th>Cheapest price</th>
+          <th>Store Name</th>
+        </tr>
+      </thead>
+
+      {% for item in items %}
+      <tr>
+        <!--      <td>{{item._id}}</td>-->
+        <td><a class="button" href="{{ url_for('details', item_id=item._id) }}">Details</a> </td>
+        <td><a href="{{ item.item_url }}" target="_blank">{{ item.item_desc }}</a></td>
+        <td>{{ item.latest_price }}</td>
+        <td>${{ item.target_price }}</td>
+        <td>{{ item.cheapest_price}}</td>
+        <td>{{ item.store_name }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <p>
+    <a href="{{ url_for('check_price_selenium') }}" ; onclick="$('#loading').show();">Check latest Price</a>
+
+  <div id="loading" class="loader" style="display:none;"></div>
+  <!--    https://blog.lavgupta.com/2011/12/jquery-modal-waiting-dialog.html-->
+
+  </p>
+
   <h2>Add new price to Track</h2>
 
   <form action="/home" method="POST">
@@ -13,11 +53,12 @@
     </div>
     <div class="form-group">
       <label for="item_desc">Description</label>
-      <input type="text" class="form-control" name="item_desc" id="item_desc" placeholder="Description" autofocus>
+      <input type="text" class="form-control" name="item_desc" id="item_desc" placeholder="Description">
     </div>
     <div class="form-group">
       <label for="item_url">Item URL</label>
-      <input type="text" class="form-control" name="item_url" id="item_url" placeholder="item url" value="https://www.amazon.com/dp/<inserid>">
+      <input type="text" class="form-control" name="item_url" id="item_url" placeholder="item url"
+        value="https://www.amazon.com/dp/<inserid>">
     </div>
 
     <div class="form-group">
@@ -26,40 +67,11 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  <a href="{{ url_for('check_price_selenium') }}" ; onclick="$('#loading').show();">Get latest Price</a>
-
-  <div id="loading" class="loader" style="display:none;"></div>
-  <!--    https://blog.lavgupta.com/2011/12/jquery-modal-waiting-dialog.html-->
 
 
-  <br /> <br />
 
 
-  <h2>Items to Track</h2>
 
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-<!--        <th>ID</th>-->
-        <th>Store Name</th>
-         <th>Description</th>
-<!--        <th>URL</th>-->
-        <TH>target price</TH>
-        <th>Admin Actions</th>
-      </tr>
-    </thead>
-
-    {% for item in items %}
-    <tr>
-<!--      <td>{{item._id}}</td>-->
-      <td>{{ item.store_name }}</td>
-      <td><a href="{{ item.item_url }}" target="_blank">{{ item.item_desc }}</a></td>
-<!--      <td><a href="{{ item.item_url }}" target="_blank">{{ item.item_url }}</a></td>-->
-      <td>{{ item.target_price }}</td>
-      <td><a href="{{ url_for('details', item_id=item._id) }}">Details</a>| <a href="{{ url_for('edit_item', item_id=item._id) }}">Update</a> | <a href="{{ url_for('delete_item', item_id=item._id) }}">Delete</a></td>
-    </tr>
-    {% endfor %}
-  </table>
 
 
 </div>
