@@ -39,8 +39,7 @@ def home():
     for item in itemsList:
         new_dict = {} # temp dict
         # get item
-        myquery = {"item_id": item["_id"]}
-        mydoc = Database.find('price_history', myquery).sort("script_time", -1).limit(1)
+
         #  copy all items to temp dict
         new_dict = item.copy()
         print(new_dict)
@@ -52,7 +51,7 @@ def home():
             new_dict['latest_price_check'] = x["script_time"]
             new_dict['latest_price'] = x["price"]
 
-        print("Chepest price...")
+        print("Cheapest price...")
         myquery = {"item_id": item["_id"]}
         mydoc = Database.find('price_history', myquery).sort("price", 1).limit(1)
         for n in mydoc:
@@ -110,14 +109,15 @@ def check_price_selenium():
     items = Database.find('items', {})
     for item in items:
         latest_price = get_latest_price(item)
-        price_item = {
-            "_id": uuid.uuid4().hex,
-            "script_time": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "item_url": item["item_url"],
-            "price": latest_price,
-            "item_id": item["_id"],
-        }
-        Database.insert('price_history', price_item)
+        if latest_price:
+            price_item = {
+                "_id": uuid.uuid4().hex,
+                "script_time": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "item_url": item["item_url"],
+                "price": latest_price,
+                "item_id": item["_id"],
+            }
+            Database.insert('price_history', price_item)
 
     return redirect('/home')
 

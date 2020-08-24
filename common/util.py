@@ -45,9 +45,14 @@ def get_latest_price(item):
     driver = webdriver.Chrome(options=chrome_options)
     driver.implicitly_wait(10)
     try:
+        print(f"Searching {item['item_desc']}")
         driver.get(item["item_url"])
-        element = WebDriverWait(driver, 30).until(
+        if item["store_name"].lower() == 'amazon':
+            element = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='priceblock_dealprice' or @id='priceblock_ourprice']")))
+        # else:
+        #     element = WebDriverWait(driver, 30).until(
+        #     EC.presence_of_element_located((By.XPATH, "//div[@class='StandardPriceBlock']/div/span[@class='notranslate']")))
         string_price = element.text.strip()
         print(string_price)
         price = string_price
@@ -62,6 +67,7 @@ def get_latest_price(item):
             print(f"Price {price} is above target price of: ${target_price}")
     except Exception as e:
         print(f"Something went wrong while searching.. Details: {e}")
+        price = None
     finally:
         driver.quit()
     return price
