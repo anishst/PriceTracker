@@ -37,13 +37,14 @@ def send_email(msg):
     except Exception as e:
         print(f"Unable to send email! {e}")
 
-def get_latest_price(item):
+def get_latest_price(item, headless=True):
 
     try:
         chrome_options = Options()
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
+        if headless:
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--no-sandbox')
         driver = webdriver.Chrome(options=chrome_options)
         driver.implicitly_wait(10)
         print(f"Searching {item['item_desc']}")

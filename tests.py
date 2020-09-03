@@ -18,7 +18,7 @@ items = Database.find('items', {})
 @pytest.mark.parametrize("item", items)
 def test_check_price_selenium(item):
     try:
-        latest_price = get_latest_price(item)
+        latest_price = get_latest_price(item, headless=False)
         print(f"Checking price for {item['item_desc']}")
         price_item = {
             "_id": uuid.uuid4().hex,
