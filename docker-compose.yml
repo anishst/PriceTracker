@@ -1,6 +1,7 @@
 version: '3.0'
 services:
   web:
+    restart: on-failure
     build: .
     command: python -u app.py
     ports:

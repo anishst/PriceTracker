@@ -38,18 +38,19 @@ def send_email(msg):
         print(f"Unable to send email! {e}")
 
 def get_latest_price(item):
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
+
     try:
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--no-sandbox')
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.implicitly_wait(10)
         print(f"Searching {item['item_desc']}")
         driver.get(item["item_url"])
         if item["store_name"].lower() == 'amazon':
             element = WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='priceblock_dealprice' or @id='priceblock_ourprice']")))
+            EC.presence_of_element_located((By.XPATH, "//*[@id='priceblock_dealprice' or @id='priceblock_ourprice' or @id='priceblock_saleprice']")))
         # else:
         #     element = WebDriverWait(driver, 30).until(
         #     EC.presence_of_element_located((By.XPATH, "//div[@class='StandardPriceBlock']/div/span[@class='notranslate']")))
