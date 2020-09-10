@@ -52,7 +52,9 @@ def home():
             new_dict['latest_price'] = x["price"]
 
         print("Cheapest price...")
-        myquery = {"item_id": item["_id"]}
+        # skip None values
+        myquery = {"item_id": item["_id"],
+                   "price": {"$ne": None}}
         mydoc = Database.find('price_history', myquery).sort("price", 1).limit(1)
         for n in mydoc:
             print(n["script_time"], n['price'])
