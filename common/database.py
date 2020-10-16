@@ -4,6 +4,7 @@ __author__ = 'ANISH SEBASTIAN'
 
 
 class Database(object):
+    # TODO  Move this to config file
     URI = "mongodb://192.168.1.50:27017"
     DATABASE = None
 
